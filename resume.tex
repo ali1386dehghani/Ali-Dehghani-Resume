@@ -1,0 +1,62 @@
+% ============================================================
+%   ALI DEHGHANI'S RESUME — based on github.com/ar-pa/Arpa-Resume
+% ============================================================
+%   راهنمای استفاده (فارسی):
+%
+%   1) همه‌ی بخش‌ها با اطلاعات تو پر شده‌اند؛ برای ویرایش، همان
+%      فایل‌های summary.tex ، skills.tex ، work.tex ،
+%      projects.tex ، education.tex و honors.tex را باز کن.
+%
+%   2) خط‌های تماس (ایمیل، لینکدین، گیت‌هاب) با اطلاعات واقعی
+%      پر شده‌اند. اگر خواستی تغییر بدهی یا به‌جای یکی از
+%      خط‌ها شماره‌ی تلفن بگذاری: \phone{+98 9xx xxx xxxx} یا
+%      \website{yoursite.com}.
+%
+%   3) عکس تو با نام photo.jpg کنار همین فایل‌هاست و به‌صورت
+%      خودکار در کادر سرمه‌ای بالا-راست قرار می‌گیرد. اگر عکس را
+%      عوض کردی، فقط فایل photo.jpg را جایگزین کن.
+%
+%   4) تاریخ‌های [Start year] و [Year] را با سال واقعی جایگزین کن.
+%
+%   5) کامپایل:
+%         tectonic resume.tex      (پیشنهادی)
+%         یا:  xelatex resume.tex  (دو بار برای لینک‌ها)
+%      خروجی: resume.pdf
+% ============================================================
+\documentclass[]{kyvernitis-resume}
+
+% ---- Personal information ----
+\fullname{Ali Dehghani}
+\jobtitle{Competitive Programming Coach \& AI Olympiad Instructor}
+\photofile{photo.jpg}
+
+\begin{document}
+
+% Contact lines (top-right):
+\resumeheaderphoto
+{\email{ali1dehghani1386715@gmail.com}}
+{\linkedin{dehghani-ali}}
+{\github{ali1386dehghani}}
+
+% Without photo, use this instead:
+% \resumeheader
+% {\email{you@example.com}}
+% {\linkedin{your-linkedin}}
+% {\github{your-github}}
+
+\input{summary}
+
+\input{skills}
+
+\input{work}
+
+% Keep Projects, Education and Honors together on page 2:
+\newpage
+
+\input{projects}
+
+\input{education}
+
+\input{honors}
+
+\end{document}
