@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
 
     steps:
       - name: Checkout Repository
@@ -22,6 +24,17 @@ jobs:
           args: "-interaction=nonstopmode -file-line-error"
         continue-on-error: true
 
+      - name: Remove stale resume artifact (re-run safety)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --paginate "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts" \
+            --jq '.artifacts[] | select(.name == "resume") | .id' \
+          | while read -r id; do
+              echo "Deleting stale artifact $id"
+              gh api --method DELETE "repos/${GITHUB_REPOSITORY}/actions/artifacts/${id}"
+            done
+
       - name: Upload PDF as artifact
         uses: actions/upload-artifact@v4
         with:
@@ -34,10 +47,22 @@ jobs:
     permissions:
       pages: write
       id-token: write
+      actions: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Remove stale github-pages artifacts (re-run safety)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --paginate "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts" \
+            --jq '.artifacts[] | select(.name == "github-pages") | .id' \
+          | while read -r id; do
+              echo "Deleting stale artifact $id"
+              gh api --method DELETE "repos/${GITHUB_REPOSITORY}/actions/artifacts/${id}"
+            done
+
       - name: Download PDF Artifact
         uses: actions/download-artifact@v4
         with:
